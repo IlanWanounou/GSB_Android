@@ -69,6 +69,7 @@ public class KmActivity extends AppCompatActivity {
 			qte = Global.listFraisMois.get(key).getKm() ;
 		}
 		((EditText)findViewById(R.id.txtKm)).setText(String.format(Locale.FRANCE, "%d", qte)) ;
+		((EditText)findViewById(R.id.txtKm)).setKeyListener(null);
 	}
 	
 	/**
