@@ -8,7 +8,9 @@
     android:layout_alignParentTop="true"
     android:orientation="vertical"
     android:weightSum="1"
-    tools:context=".KmActivity">
+    tools:context=".KmActivity"
+    android:layout_alignParentRight="true"
+    android:layout_alignParentLeft="true">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -88,7 +90,8 @@
             android:layout_height="match_parent"
             android:layout_gravity="end"
             android:paddingEnd="10dp"
-            tools:ignore="RtlSymmetry">
+            tools:ignore="RtlSymmetry"
+            android:paddingRight="10dp">
 
             <EditText
                 android:id="@+id/txtKm"
@@ -132,7 +135,7 @@
             <Button
                 android:id="@+id/cmdKmPlus"
                 android:layout_width="45dp"
-                android:layout_height="45dp"
+                android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="@string/plus"
                 android:textSize="20sp" />
