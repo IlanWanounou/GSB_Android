@@ -14,7 +14,7 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
-public class MainActivity extends AppCompatActivity {
+public class AccueilActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,13 +24,12 @@ public class MainActivity extends AppCompatActivity {
         // récupération des informations sérialisées
         recupSerialize();
         // chargement des méthodes événementielles
-       /* cmdMenu_clic((ImageButton) findViewById(R.id.cmdKm), KmActivity.class);
+        cmdMenu_clic((ImageButton) findViewById(R.id.cmdKm), KmActivity.class);
         cmdMenu_clic((ImageButton) findViewById(R.id.cmdHf), HfActivity.class);
         cmdMenu_clic((ImageButton) findViewById(R.id.cmdHfRecap), HfRecapActivity.class);
         cmdMenu_clic((ImageButton) findViewById(R.id.cmdRepas), RepasActivity.class);
         cmdMenu_clic((ImageButton) findViewById(R.id.cmdNuitees), NuiteesActivity.class);
-        cmdMenu_clic((ImageButton) findViewById(R.id.cmdEtapes), EtapesActivity.class);*/
-        cmdMenu_clicV2((Button) findViewById(R.id.cmdloginValider), KmActivity.class);
+        cmdMenu_clic((ImageButton) findViewById(R.id.cmdEtapes), EtapesActivity.class);
     }
 
     @Override
@@ -51,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
          * on cast chaque valeur dans le type attendu.
          * Seulement ensuite on affecte cet Hastable à Global.listFraisMois.
         */
-        Hashtable<?, ?> monHash = (Hashtable<?, ?>) Serializer.deSerialize(MainActivity.this);
+        Hashtable<?, ?> monHash = (Hashtable<?, ?>) Serializer.deSerialize(AccueilActivity.this);
         if (monHash != null) {
             Hashtable<Integer, FraisMois> monHashCast = new Hashtable<>();
             for (Hashtable.Entry<?, ?> entry : monHash.entrySet()) {
@@ -77,17 +76,7 @@ public class MainActivity extends AppCompatActivity {
         button.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
                 // ouvre l'activité
-                Intent intent = new Intent(MainActivity.this, classe);
-                startActivity(intent);
-            }
-        });
-    }
-
-    private void cmdMenu_clicV2(Button button, final Class classe) {
-        button.setOnClickListener(new Button.OnClickListener() {
-            public void onClick(View v) {
-                // ouvre l'activité
-                Intent intent = new Intent(MainActivity.this, classe);
+                Intent intent = new Intent(AccueilActivity.this, classe);
                 startActivity(intent);
             }
         });
