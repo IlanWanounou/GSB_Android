@@ -3,6 +3,7 @@
     package="fr.cned.emdsgil.suividevosfrais">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -18,6 +19,7 @@
         <activity android:name=".RepasActivity" />
         <activity android:name=".NuiteesActivity" />
         <activity android:name=".EtapesActivity" />
+        <activity android:name=".AccueilActivity"/>
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name">
