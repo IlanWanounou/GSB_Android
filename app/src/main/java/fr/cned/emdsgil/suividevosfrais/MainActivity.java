@@ -8,9 +8,11 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
@@ -19,17 +21,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        setTitle("GSB : Suivi des frais");
+        setContentView(R.layout.activity_login);
+        setTitle("GSB : Suivi des frais - Connexion ");
         // récupération des informations sérialisées
         recupSerialize();
         // chargement des méthodes événementielles
-        cmdMenu_clic((ImageButton) findViewById(R.id.cmdKm), KmActivity.class);
-        cmdMenu_clic((ImageButton) findViewById(R.id.cmdHf), HfActivity.class);
-        cmdMenu_clic((ImageButton) findViewById(R.id.cmdHfRecap), HfRecapActivity.class);
-        cmdMenu_clic((ImageButton) findViewById(R.id.cmdRepas), RepasActivity.class);
-        cmdMenu_clic((ImageButton) findViewById(R.id.cmdNuitees), NuiteesActivity.class);
-        cmdMenu_clic((ImageButton) findViewById(R.id.cmdEtapes), EtapesActivity.class);
+        cmdMenu_clic((Button) findViewById(R.id.cmdloginValider), AccueilActivity.class);
+
     }
 
     @Override
@@ -69,10 +67,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * Sur la sélection d'un bouton dans l'activité principale ouverture de l'activité correspondante
-     */
-    private void cmdMenu_clic(ImageButton button, final Class classe) {
+    private void cmdMenu_clic(Button button, final Class classe) {
+
         button.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
                 // ouvre l'activité
