@@ -19,7 +19,7 @@ public class AccueilActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_main);
         setTitle("GSB : Suivi des frais");
         // récupération des informations sérialisées
         recupSerialize();
