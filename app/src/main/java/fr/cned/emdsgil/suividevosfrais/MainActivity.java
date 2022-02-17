@@ -66,26 +66,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void cmdMenu_clic(Button button, final Class classe) {
-        RequestQueue queue = Volley.newRequestQueue(this);
         button.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
                 String password = ((EditText)findViewById(R.id.txtPassword)).getText().toString();
                 String login = ((EditText)findViewById(R.id.txtEmail)).getText().toString();
 
-                StringRequest stringRequest = new StringRequest(Request.Method.GET, "https://www.google.com",
-                        new Response.Listener<String>() {
-                            @Override
-                            public void onResponse(String response) {
-                                Log.i("REQUETE SUCCESS: ", response.substring(0,500));
-                            }
-                        }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.i("erreur", "ERREUR LORS DE L'ENVOIE DE LA REQUETE");
-                    }
-                });
-
-                queue.add(stringRequest);
+               Requete requete = new Requete(MainActivity.this);
+               requete.login(login, password, new Requete.loginI() {
+                   @Override
+                   public void reponse(JSONObject object) {
+                       System.out.println(object);
+                   }
+               });
 
 
                 // ouvre l'activité
