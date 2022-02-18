@@ -10,35 +10,53 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Requete {
+
     Context context;
+    String baseUri = "http://10.0.2.2:3000";
+
     public Requete(Context context) {
         this.context = context;
     }
 
-    public interface loginI {
-        void reponse(JSONObject object);
-    }
-    public void login(String login, String password, loginI loginI) {
+    /**
+     * Vérifie si un utilisateur peut se login
+     * @param login Identifiant du compte
+     * @param password Mot de passe du compte
+     * @return Vrai/Faux
+     */
+    public boolean login(String login, String password) {
+        String loginUri = this.baseUri + "/auth/login";
+        final Boolean[] isLogin = {false};
+
         RequestQueue queue = Volley.newRequestQueue(context);
 
-        JsonObjectRequest stringRequest = new JsonObjectRequest(Request.Method.GET, "http://10.0.2.2:3000/auth/login",
+        JsonObjectRequest stringRequest = new JsonObjectRequest(Request.Method.GET, loginUri,
                 null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        loginI.reponse(response);
+                        try {
+                            if (response.getJSONObject("A complete avec api").getBoolean("A complete avec api")) {
+                                isLogin[0] = true;
+                            } else {
+                                isLogin[0] = false;
+                            }
+                        } catch (JSONException e) {
+                            isLogin[0] = false;
+                        }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 System.out.println(error.getMessage());
-                Log.i("erreur", "ERREUR LORS DE L'ENVOIE DE LA REQUETE");
+                isLogin[0] = false;
             }
         });
-
         queue.add(stringRequest);
+        return isLogin[0];
     }
 }

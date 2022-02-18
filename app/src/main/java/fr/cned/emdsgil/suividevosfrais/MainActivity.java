@@ -71,18 +71,17 @@ public class MainActivity extends AppCompatActivity {
                 String password = ((EditText)findViewById(R.id.txtPassword)).getText().toString();
                 String login = ((EditText)findViewById(R.id.txtEmail)).getText().toString();
 
-               Requete requete = new Requete(MainActivity.this);
-               requete.login(login, password, new Requete.loginI() {
-                   @Override
-                   public void reponse(JSONObject object) {
-                       System.out.println(object);
-                   }
-               });
+                Requete requete = new Requete(MainActivity.this);
+
+                if (requete.login(login, password)) {
+                    // ouvre l'activité
+                    Intent intent = new Intent(MainActivity.this, classe);
+                    startActivity(intent);
+                } else {
+                    System.out.println("TODO : Erreur serveur API ou couple identifiant/motdepasse incorrect");
+                }
 
 
-                // ouvre l'activité
-                Intent intent = new Intent(MainActivity.this, classe);
-                startActivity(intent);
             }
         });
     }
