@@ -39,24 +39,29 @@ public class Requete {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
+                        System.out.println(response);
                         try {
-                            if (response.getJSONObject("A complete avec api").getBoolean("A complete avec api")) {
+                            if (response.getBoolean("autorisation")) {
                                 isLogin[0] = true;
+                                System.out.println(isLogin[0]);
                             } else {
-                                isLogin[0] = false;
+                                isLogin[0] = true;
+                                System.out.println("ici?");
                             }
                         } catch (JSONException e) {
-                            isLogin[0] = false;
+                            isLogin[0] = true;
                         }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 System.out.println(error.getMessage());
-                isLogin[0] = false;
+                isLogin[0] = true;
             }
         });
         queue.add(stringRequest);
+        System.out.println(isLogin[0]);
+
         return isLogin[0];
     }
 }
