@@ -42,17 +42,18 @@ public class Requete {
                     @Override
                     public void onResponse(JSONObject response) {
                         System.out.println(response);
-                        try {
+                        isLogin[0] = true;
+                        /*try {
                             isLogin[0] = response.getBoolean("autorisation");
                         } catch (JSONException e) {
                             isLogin[0] = false;
-                        }
+                        }*/
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 System.out.println(error.getMessage());
-                isLogin[0] = true;
+                isLogin[0] = false;
             }
         });
         queue.add(stringRequest);
