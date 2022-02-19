@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Hashtable;
@@ -73,12 +74,16 @@ public class MainActivity extends AppCompatActivity {
 
                 Requete requete = new Requete(MainActivity.this);
 
-                if (requete.login(login, password)) {
-                    // ouvre l'activité
-                    Intent intent = new Intent(MainActivity.this, classe);
-                    startActivity(intent);
-                } else {
-                    System.out.println("TODO : Erreur serveur API ou couple identifiant/motdepasse incorrect");
+                try {
+                    if (requete.login(login, password)) {
+                        // ouvre l'activité
+                        Intent intent = new Intent(MainActivity.this, classe);
+                        startActivity(intent);
+                    } else {
+                        System.out.println("TODO : Erreur serveur API ou couple identifiant/motdepasse incorrect");
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
 
 

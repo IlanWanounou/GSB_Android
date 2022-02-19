@@ -1,7 +1,6 @@
 package fr.cned.emdsgil.suividevosfrais;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -28,28 +27,25 @@ public class Requete {
      * @param password Mot de passe du compte
      * @return Vrai/Faux
      */
-    public boolean login(String login, String password) {
+    public boolean login(String login, String password) throws JSONException {
         String loginUri = this.baseUri + "/auth/login";
         final Boolean[] isLogin = {false};
 
         RequestQueue queue = Volley.newRequestQueue(context);
+        JSONObject obj = new JSONObject();
 
-        JsonObjectRequest stringRequest = new JsonObjectRequest(Request.Method.GET, loginUri,
-                null,
+        obj.put("email",login);
+        obj.put("password", password);
+
+        JsonObjectRequest stringRequest = new JsonObjectRequest(Request.Method.POST, loginUri, obj,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         System.out.println(response);
                         try {
-                            if (response.getBoolean("autorisation")) {
-                                isLogin[0] = true;
-                                System.out.println(isLogin[0]);
-                            } else {
-                                isLogin[0] = true;
-                                System.out.println("ici?");
-                            }
+                            isLogin[0] = response.getBoolean("autorisation");
                         } catch (JSONException e) {
-                            isLogin[0] = true;
+                            isLogin[0] = false;
                         }
                     }
                 }, new Response.ErrorListener() {
@@ -60,7 +56,6 @@ public class Requete {
             }
         });
         queue.add(stringRequest);
-        System.out.println(isLogin[0]);
 
         return isLogin[0];
     }
