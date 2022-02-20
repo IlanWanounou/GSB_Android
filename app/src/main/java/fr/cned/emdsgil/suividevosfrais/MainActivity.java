@@ -11,7 +11,6 @@ import android.widget.EditText;
 
 
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.Hashtable;
 
@@ -46,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
          * On créé un Hashtable générique <?,?> dans lequel on récupère l'Object retourné par la méthode deSerialize, puis
          * on cast chaque valeur dans le type attendu.
          * Seulement ensuite on affecte cet Hastable à Global.listFraisMois.
-        */
+         */
         Hashtable<?, ?> monHash = (Hashtable<?, ?>) Serializer.deSerialize(MainActivity.this);
         if (monHash != null) {
             Hashtable<Integer, FraisMois> monHashCast = new Hashtable<>();
@@ -59,9 +58,9 @@ public class MainActivity extends AppCompatActivity {
         if (Global.listFraisMois == null) {
             Global.listFraisMois = new Hashtable<>();
             /* Retrait du type de l'HashTable (Optimisation Android Studio)
-			 * Original : Typage explicit =
-			 * Global.listFraisMois = new Hashtable<Integer, FraisMois>();
-			*/
+             * Original : Typage explicit =
+             * Global.listFraisMois = new Hashtable<Integer, FraisMois>();
+             */
 
         }
     }
@@ -69,24 +68,21 @@ public class MainActivity extends AppCompatActivity {
     private void cmdMenu_clic(Button button, final Class classe) {
         button.setOnClickListener(new Button.OnClickListener() {
             public void onClick(View v) {
-                String password = ((EditText)findViewById(R.id.txtPassword)).getText().toString();
-                String login = ((EditText)findViewById(R.id.txtEmail)).getText().toString();
-
+                String password = ((EditText) findViewById(R.id.txtPassword)).getText().toString();
+                String login = ((EditText) findViewById(R.id.txtEmail)).getText().toString();
                 Requete requete = new Requete(MainActivity.this);
-
                 try {
-                    if (requete.login(login, password)) {
-                        // ouvre l'activité
-                        Intent intent = new Intent(MainActivity.this, classe);
-                        startActivity(intent);
-                    } else {
-                        System.out.println("TODO : Erreur serveur API ou couple identifiant/motdepasse incorrect");
-                    }
+                    requete.login(login, password, new Requete.loginI() {
+                        @Override
+                        public void reponse(boolean bool) {
+                            if(bool) {
+                                Intent intent = new Intent(MainActivity.this, classe);
+                                startActivity(intent);                            }
+                        }
+                    });
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
-
             }
         });
     }

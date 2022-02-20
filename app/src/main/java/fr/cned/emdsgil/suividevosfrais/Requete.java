@@ -27,10 +27,8 @@ public class Requete {
      * @param password Mot de passe du compte
      * @return Vrai/Faux
      */
-    public boolean login(String login, String password) throws JSONException {
+    public void login(String login, String password, loginI loginI) throws JSONException {
         String loginUri = this.baseUri + "/auth/login";
-        final Boolean[] isLogin = {false};
-
         RequestQueue queue = Volley.newRequestQueue(context);
         JSONObject obj = new JSONObject();
 
@@ -40,24 +38,23 @@ public class Requete {
         JsonObjectRequest stringRequest = new JsonObjectRequest(Request.Method.POST, loginUri, obj,
                 new Response.Listener<JSONObject>() {
                     @Override
-                    public void onResponse(JSONObject response) {
-                        System.out.println(response);
-                        isLogin[0] = true;
-                        /*try {
-                            isLogin[0] = response.getBoolean("autorisation");
+                        public void onResponse(JSONObject response) {
+                        try {
+                            loginI.reponse(response.getBoolean("autorisation"));
                         } catch (JSONException e) {
-                            isLogin[0] = false;
-                        }*/
+                            e.printStackTrace();
+                        }
                     }
+
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 System.out.println(error.getMessage());
-                isLogin[0] = false;
             }
         });
         queue.add(stringRequest);
-
-        return isLogin[0];
+    }
+    public interface loginI {
+        void reponse(boolean bool);
     }
 }
