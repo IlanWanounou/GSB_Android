@@ -62,13 +62,20 @@ public class KmActivity extends AppCompatActivity {
 	private void valoriseProprietes() {
 		annee = ((DatePicker)findViewById(R.id.datKm)).getYear() ;
 		mois = ((DatePicker)findViewById(R.id.datKm)).getMonth() + 1 ;
-		// récupération de la qte correspondant au mois actuel
-		qte = 0 ;
-		Integer key = annee*100+mois ;
-		if (Global.listFraisMois.containsKey(key)) {
-			qte = Global.listFraisMois.get(key).getKm() ;
-		}
-		((EditText)findViewById(R.id.txtKm)).setText(String.format(Locale.FRANCE, "%d", qte)) ;
+		Requete requete = new Requete(KmActivity.this);
+		String moisRequette = annee.toString()+mois.toString();
+		requete.getFraisKm(moisRequette, new Requete.requestReponseData() {
+
+			@Override
+			public void data(JSONObject object) {
+				try {
+						((EditText)findViewById(R.id.txtKm)).setText(String.format(Locale.FRANCE, "%d", object.getInt("quantite")));
+
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+			}
+		});
 	}
 	
 	/**
