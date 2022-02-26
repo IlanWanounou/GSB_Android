@@ -12,6 +12,14 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.net.CookieHandler;
+import java.net.CookieManager;
+import java.net.CookiePolicy;
+import java.net.CookieStore;
+import java.net.HttpCookie;
+import java.net.URI;
+import java.net.URISyntaxException;
+
 public class Requete {
 
     Context context;
