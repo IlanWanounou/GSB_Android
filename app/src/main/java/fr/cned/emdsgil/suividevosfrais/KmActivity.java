@@ -13,6 +13,9 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.Locale;
 
 public class KmActivity extends AppCompatActivity {
@@ -158,7 +161,7 @@ public class KmActivity extends AppCompatActivity {
 	 * Retour à l'activité principale (le menu)
 	 */
 	private void retourActivityPrincipale() {
-		Intent intent = new Intent(KmActivity.this, MainActivity.class) ;
+		Intent intent = new Intent(KmActivity.this, AccueilActivity.class) ;
 		startActivity(intent) ;   					
 	}
 }
