@@ -78,7 +78,31 @@ public class Requete {
         });
         queue.add(stringRequest);
     }
-    public interface loginI {
-        void reponse(boolean bool);
+
+    public void getFraisKm(String moisAnne, requestReponseData requestReponse)  {
+        String fraisKmUrl = this.baseUri + "/fichefrais/fraiskm/"+moisAnne;
+        RequestQueue queue = Volley.newRequestQueue(context);
+        JsonObjectRequest stringRequest = new JsonObjectRequest(Request.Method.POST, fraisKmUrl, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                            requestReponse.data(response);
+                    }
+
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                System.out.println(error.getMessage());
+            }
+        });
+        queue.add(stringRequest);
+
+    }
+
+    public interface requestReponseLogin {
+        void reponseLogin(boolean bool);
+    }
+    public interface requestReponseData {
+        void data(JSONObject object);
     }
 }
