@@ -27,7 +27,7 @@ public class Requete {
      * @param password Mot de passe du compte
      * @return Vrai/Faux
      */
-    public void login(String login, String password, loginI loginI) throws JSONException {
+    public void login(String login, String password, requestReponseLogin loginI) throws JSONException {
         String loginUri = this.baseUri + "/auth/login";
         RequestQueue queue = Volley.newRequestQueue(context);
         JSONObject obj = new JSONObject();
@@ -39,8 +39,24 @@ public class Requete {
                 new Response.Listener<JSONObject>() {
                     @Override
                         public void onResponse(JSONObject response) {
+
+
+                            CookieManager cookieManager = new CookieManager(null, CookiePolicy.ACCEPT_ALL);
+                            CookieStore cookieStore = cookieManager.getCookieStore();
+                            CookieHandler.setDefault(cookieManager);
+
+                        HttpCookie cookie;
                         try {
-                            loginI.reponse(response.getBoolean("autorisation"));
+                            cookie = new HttpCookie("token", response.getString("AUTH_TOKEN"));
+                            cookieStore.add(new URI(baseUri), cookie);
+
+                        } catch (JSONException | URISyntaxException e) {
+                            e.printStackTrace();
+                        }
+
+                        try {
+                            loginI.reponseLogin(response.getBoolean("autorisation"));
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
