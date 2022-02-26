@@ -72,9 +72,9 @@ public class MainActivity extends AppCompatActivity {
                 String login = ((EditText) findViewById(R.id.txtEmail)).getText().toString();
                 Requete requete = new Requete(MainActivity.this);
                 try {
-                    requete.login(login, password, new Requete.loginI() {
+                    requete.login(login, password, new Requete.requestReponseLogin() {
                         @Override
-                        public void reponse(boolean bool) {
+                        public void reponseLogin(boolean bool) {
                             if(bool) {
                                 Intent intent = new Intent(MainActivity.this, classe);
                                 startActivity(intent);                            }
