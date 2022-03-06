@@ -13,6 +13,9 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.Locale;
 
 public class RepasActivity extends AppCompatActivity {
@@ -62,13 +65,20 @@ public class RepasActivity extends AppCompatActivity {
 	private void valoriseProprietes() {
 		annee = ((DatePicker)findViewById(R.id.datRepas)).getYear() ;
 		mois = ((DatePicker)findViewById(R.id.datRepas)).getMonth() + 1 ;
-		// récupération de la qte correspondant au mois actuel
-		qte = 0 ;
-		Integer key = annee*100+mois ;
-		if (Global.listFraisMois.containsKey(key)) {
-			qte = Global.listFraisMois.get(key).getRepas() ;
-		}
-		((EditText)findViewById(R.id.txtRepas)).setText(String.format(Locale.FRANCE, "%d", qte)) ;
+		Requete requete = new Requete(RepasActivity.this);
+		String moisRequette = annee.toString()+mois.toString();
+		requete.getFrais(moisRequette, "fraisrepas", new Requete.requestReponseData() {
+
+			@Override
+			public void data(JSONObject object) {
+				try {
+					((EditText)findViewById(R.id.txtRepas)).setText(String.format(Locale.FRANCE, "%d", object.getInt("quantite")));
+
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+			}
+		});
 	}
 	
 	/**
@@ -151,7 +161,7 @@ public class RepasActivity extends AppCompatActivity {
 	 * Retour à l'activité principale (le menu)
 	 */
 	private void retourActivityPrincipale() {
-		Intent intent = new Intent(RepasActivity.this, MainActivity.class) ;
+		Intent intent = new Intent(RepasActivity.this, AccueilActivity.class) ;
 		startActivity(intent) ;   					
 	}
 }
