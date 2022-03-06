@@ -67,7 +67,7 @@ public class KmActivity extends AppCompatActivity {
 		mois = ((DatePicker)findViewById(R.id.datKm)).getMonth() + 1 ;
 		Requete requete = new Requete(KmActivity.this);
 		String moisRequette = annee.toString()+mois.toString();
-		requete.getFraisKm(moisRequette, new Requete.requestReponseData() {
+		requete.getFrais(moisRequette, "fraiskm", new Requete.requestReponseData() {
 
 			@Override
 			public void data(JSONObject object) {

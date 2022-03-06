@@ -79,10 +79,10 @@ public class Requete {
         queue.add(stringRequest);
     }
 
-    public void getFraisKm(String moisAnne, requestReponseData requestReponse)  {
-        String fraisKmUrl = this.baseUri + "/fichefrais/fraiskm/"+moisAnne;
+    public void getFrais(String moisAnne, String typeFrais, requestReponseData requestReponse)  {
+        String fraisUrl = this.baseUri + "/fichefrais/"+typeFrais+"/"+moisAnne;
         RequestQueue queue = Volley.newRequestQueue(context);
-        JsonObjectRequest stringRequest = new JsonObjectRequest(Request.Method.POST, fraisKmUrl, null,
+        JsonObjectRequest stringRequest = new JsonObjectRequest(Request.Method.POST, fraisUrl, null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
